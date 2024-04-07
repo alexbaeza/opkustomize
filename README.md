@@ -1,8 +1,7 @@
 # OpKustomize
 
 OpKustomize is a Bash script that facilitates the injection of secrets and environment variable substitution using
-1Password CLI (`op`) and `envsubst` respectively. It is designed to be used in conjunction with Kustomize for Kubernetes
-configuration management.
+1Password CLI (`op`) and `envsubst` respectively. It is a wrapper around `kustomize build` and it is designed to be used in conjunction with Kustomize for Kubernetes configuration management.
 
 ## Requirements
 
