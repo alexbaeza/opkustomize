@@ -44,9 +44,8 @@ copy_and_substitute() {
       envsubst <"$file" >"$destination_file"
     fi
   done < <(find "$target_folder" -type f -print0)
-
-  echo "Files copied from $target_folder to $temp_destination with environment variable substitution."
 }
+
 export -f copy_and_substitute
 
 # Main function
