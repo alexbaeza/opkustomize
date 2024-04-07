@@ -1,7 +1,8 @@
 # OpKustomize
 
 OpKustomize is a Bash script that facilitates the injection of secrets and environment variable substitution using
-1Password CLI (`op`) and `envsubst` respectively. It is a wrapper around `kustomize build` and it is designed to be used in conjunction with Kustomize for Kubernetes configuration management.
+1Password CLI (`op`) and `envsubst` respectively. It is a wrapper around `kustomize build` and it is designed to be used
+in conjunction with Kustomize for Kubernetes configuration management.
 
 ## Requirements
 
@@ -11,18 +12,15 @@ OpKustomize is a Bash script that facilitates the injection of secrets and envir
 - `OP_SERVICE_ACCOUNT_TOKEN` environment variable set with the token for 1Password service account.
 - `.env` file defining the secrets and environment variables to be injected.
 
-
 ## Installation
 
 To install OpKustomize, follow these steps:
-
 
 ```bash
 curl -LO "https://github.com/alexbaeza/opkustomize/raw/main/opkustomize.sh"
 chmod +x opkustomize.sh
 sudo mv opkustomize.sh /usr/local/bin/opkustomize
 ```
-
 
 ## Usage
 
@@ -72,3 +70,8 @@ opkustomize cluster-credentials.dev.env ./k8s/apps/overlays/production/ --enable
 - OpKustomize uses `op` to inject secrets into the Kubernetes configuration files.
 - Environment variables in the configuration files are substituted using `envsubst`.
 - The temporary directory used for processing is cleaned up automatically after script execution.
+
+## License
+
+This project is licensed under the MIT License.
+See the [LICENSE](https://github.com/alexbaeza/opkustomize/raw/main/LICENSE) file for details.
