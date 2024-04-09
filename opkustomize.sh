@@ -48,20 +48,31 @@ copy_and_substitute() {
 
 export -f copy_and_substitute
 
+display_usage(){
+  echo "Usage: opkustomize <env_file> <target_folder> [other_flags...]"
+}
+
 # Main function
 main() {
   # Validate input parameters
   if [ "$#" -lt 2 ]; then
-    echo "Usage: opkustomize <env_file> <target_folder> [other_flags...]"
+    display_usage
     exit 1
+  fi
+
+  if [ "$1" == "help" ]; then
+      display_usage
+      exit 0
   fi
 
   local env_file="$1"
   local target_folder="$2"
   shift 2 # Shift to ignore the first two arguments
 
+  local root
+  root=$(dirname "${BASH_SOURCE[0]}")
+
   # Create temporary directory
-  local root=$(dirname "${BASH_SOURCE[0]}")
   temp_dir=$(mktemp -d "${root}/tmp.XXXXXXXXX")
   # Run main functionality
   op run --env-file="$env_file" -- bash -c 'copy_and_substitute "$0" "$1"' "$target_folder" "$temp_dir"
