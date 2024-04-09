@@ -48,21 +48,21 @@ copy_and_substitute() {
 
 export -f copy_and_substitute
 
-display_usage(){
+display_usage() {
   echo "Usage: opkustomize <env_file> <target_folder> [other_flags...]"
 }
 
 # Main function
 main() {
+  if [ "$1" == "help" ]; then
+    display_usage
+    exit 0
+  fi
+
   # Validate input parameters
   if [ "$#" -lt 2 ]; then
     display_usage
     exit 1
-  fi
-
-  if [ "$1" == "help" ]; then
-      display_usage
-      exit 0
   fi
 
   local env_file="$1"
