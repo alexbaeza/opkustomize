@@ -1,8 +1,15 @@
+<div style="text-align: center" align="center">
+
 # OpKustomize
 
-OpKustomize is a Bash script that facilitates the injection of secrets and environment variable substitution using
-1Password CLI (`op`) and `envsubst` respectively. It is a wrapper around `kustomize build` and it is designed to be used
-in conjunction with Kustomize for Kubernetes configuration management.
+> OpKustomize is a Bash script that facilitates the injection of secrets and environment variable substitution using
+> 1Password CLI (`op`) and `envsubst` respectively. It is a wrapper around `kustomize build` and it is designed to be used
+> in conjunction with Kustomize for Kubernetes configuration management.
+
+[![Commits](https://img.shields.io/github/commit-activity/w/alexbaeza/opkustomize?style=flat)](https://github.com/alexbaeza/opkustomize/pulse)
+[![Issues](https://img.shields.io/github/issues/alexbaeza/opkustomize.svg?style=flat)](https://github.com/alexbaeza/opkustomize/issues)
+[![Releases](https://img.shields.io/github/v/release/alexbaeza/opkustomize.svg?style=flat)](https://github.com/alexbaeza/opkustomize/releases)
+</div>
 
 ## Requirements
 
