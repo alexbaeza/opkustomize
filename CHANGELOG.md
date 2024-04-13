@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/alexbaeza/opkustomize/compare/v1.1.0...v1.2.0) (2024-04-13)
+
+
+### Features
+
+* **enhancement:** Add --dry-run flag that does not run and replace env vars ([1665090](https://github.com/alexbaeza/opkustomize/commit/166509002dd747e8b97ae33ec99186d2cd780001))
+
 # [1.1.0](https://github.com/alexbaeza/opkustomize/compare/v1.0.0...v1.1.0) (2024-04-13)
 
 
