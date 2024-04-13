@@ -82,4 +82,3 @@ opkustomize cluster-credentials.dev.env ./k8s/apps/overlays/production/ --enable
 
 This project is licensed under the MIT License.
 See the [LICENSE](https://github.com/alexbaeza/opkustomize/raw/main/LICENSE) file for details.
-
