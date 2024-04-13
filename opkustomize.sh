@@ -88,7 +88,6 @@ main() {
     case $arg in
     --dry-run)
       dry_run=true
-      echo "Found dry run flag, will not inject secrets"
       ;;
     *) set -- "$@" "$arg" ;;
     esac
