@@ -52,9 +52,9 @@ display_usage() {
   echo "Usage: opkustomize <env_file> <target_folder> [other_flags...]"
 }
 
-# Main function
-main() {
-  if [ "$1" == "help" ]; then
+# Function to validate arguments being passed in
+validateArguments() {
+  if [ "$#" -eq 0 ] || [ "$1" == "help" ]; then
     display_usage
     exit 0
   fi
@@ -64,6 +64,12 @@ main() {
     display_usage
     exit 1
   fi
+
+}
+# Main function
+main() {
+
+  validateArguments "$@"
 
   local env_file="$1"
   local target_folder="$2"
