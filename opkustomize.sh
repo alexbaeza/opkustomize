@@ -27,6 +27,7 @@ trap pre_exit HUP INT QUIT TERM
 copy_and_substitute() {
   local target_folder="$1"
   local temp_dir="$2"
+  local dry_run="$3"
 
   local temp_destination="$temp_dir/$target_folder"
 
@@ -40,8 +41,14 @@ copy_and_substitute() {
       destination_file="$temp_destination/${file#$target_folder/}"
       mkdir -p "$(dirname "$destination_file")"
 
-      # Perform environment variable substitution
-      envsubst <"$file" >"$destination_file"
+      if [ "$dry_run" = false ]; then
+        # Perform environment variable substitution
+        envsubst <"$file" >"$destination_file"
+      else
+        # Perform environment variable substitution
+        cat "$file" >"$destination_file"
+      fi
+
     fi
   done < <(find "$target_folder" -type f -print0)
 }
@@ -66,10 +73,26 @@ validateArguments() {
   fi
 
 }
+
 # Main function
 main() {
 
   validateArguments "$@"
+
+  local dry_run
+
+  dry_run="${dry_run:-false}"
+
+  for arg; do
+    shift
+    case $arg in
+    --dry-run)
+      dry_run=true
+      echo "Found dry run flag, will not inject secrets"
+      ;;
+    *) set -- "$@" "$arg" ;;
+    esac
+  done
 
   local env_file="$1"
   local target_folder="$2"
@@ -80,8 +103,14 @@ main() {
 
   # Create temporary directory
   temp_dir=$(mktemp -d "${root}/tmp.XXXXXXXXX")
+
   # Run main functionality
-  op run --env-file="$env_file" -- bash -c 'copy_and_substitute "$0" "$1"' "$target_folder" "$temp_dir"
+  if [ "$dry_run" = false ]; then
+    op run --env-file="$env_file" -- bash -c 'copy_and_substitute "$0" "$1"' "$target_folder" "$temp_dir"
+  else
+    copy_and_substitute "$target_folder" "$temp_dir" "$dry_run"
+  fi
+
   kustomize build "$temp_dir/$target_folder" "$@"
 }
 
