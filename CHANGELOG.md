@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/alexbaeza/opkustomize/compare/v1.2.2...v1.2.3) (2024-04-13)
+
+
+### Bug Fixes
+
+* Fixes paths and removes debug logs ([9c1d6db](https://github.com/alexbaeza/opkustomize/commit/9c1d6db042b03c4303092e2e11a2f8ca2eaae7b3))
+
 ## [1.2.2](https://github.com/alexbaeza/opkustomize/compare/v1.2.1...v1.2.2) (2024-04-13)
 
 
