@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/alexbaeza/opkustomize/compare/v1.2.1...v1.2.2) (2024-04-13)
+
+
+### Bug Fixes
+
+* **path-copy:** Make script copy eveything from root folder to be able to support kustomize overlays ([f7bbbda](https://github.com/alexbaeza/opkustomize/commit/f7bbbda85e5d781b92f278f0e256fdf05af0e09d))
+
 ## [1.2.1](https://github.com/alexbaeza/opkustomize/compare/v1.2.0...v1.2.1) (2024-04-13)
 
 
