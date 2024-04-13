@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/alexbaeza/opkustomize/compare/v1.2.0...v1.2.1) (2024-04-13)
+
+
+### Bug Fixes
+
+* **enhancement:** Remove logs as it conflictsand creates an issue when piping the output to other tools such as kubeconform ([fde5199](https://github.com/alexbaeza/opkustomize/commit/fde51999257118ba1f690330810dfb91674bca07))
+
 # [1.2.0](https://github.com/alexbaeza/opkustomize/compare/v1.1.0...v1.2.0) (2024-04-13)
 
 
