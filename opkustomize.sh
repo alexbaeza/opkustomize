@@ -29,28 +29,30 @@ copy_and_substitute() {
   local temp_dir="$2"
   local dry_run="$3"
 
-  local temp_destination="$temp_dir/$target_folder"
+  local temp_destination="$temp_dir"
 
   # Create temp_destination if it doesn't exist
   mkdir -p "$temp_destination"
 
-  # Iterate over files in the source directory
-  while IFS= read -r -d '' file; do
-    if [ -f "$file" ]; then
-      # Calculate destination file path
-      destination_file="$temp_destination/${file#$target_folder/}"
-      mkdir -p "$(dirname "$destination_file")"
+  local root_path
+  root_path="$target_folder"
 
-      if [ "$dry_run" = false ]; then
-        # Perform environment variable substitution
-        envsubst <"$file" >"$destination_file"
-      else
-        # Perform environment variable substitution
-        cat "$file" >"$destination_file"
-      fi
+  IFS='/' read -ra parts <<< "$target_folder"
+  if [ "${parts[0]}" = "." ]; then
+      root_path="${parts[1]}"
+  else
+    root_path="${parts[0]}"
+  fi
+  echo "$root_path"
 
-    fi
-  done < <(find "$target_folder" -type f -print0)
+  # Copy everything from the source root directory to the temp destination
+  # We copy everything from the root to be able to apply overlays too
+  cp -r "$root_path"/* "$temp_destination/"
+
+  # Perform environment variable substitution
+  if [ "$dry_run" = false ]; then
+    find "$temp_destination" -type f -exec envsubst {} \;
+  fi
 }
 
 export -f copy_and_substitute
@@ -110,6 +112,7 @@ main() {
     copy_and_substitute "$target_folder" "$temp_dir" "$dry_run"
   fi
 
+  cd "$temp_dir"
   kustomize build "$temp_dir/$target_folder" "$@"
 }
 
