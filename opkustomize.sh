@@ -31,9 +31,6 @@ copy_and_substitute() {
 
   local temp_destination="$temp_dir"
 
-  # Create temp_destination if it doesn't exist
-  mkdir -p "$temp_destination"
-
   local root_path
   root_path="$target_folder"
 
@@ -43,11 +40,14 @@ copy_and_substitute() {
   else
     root_path="${parts[0]}"
   fi
-  echo "$root_path"
+
+
+  # Create temp_destination if it doesn't exist
+  mkdir -p "$temp_destination/$root_path"
 
   # Copy everything from the source root directory to the temp destination
   # We copy everything from the root to be able to apply overlays too
-  cp -r "$root_path"/* "$temp_destination/"
+  cp -r "$root_path"/* "$temp_destination/$root_path"
 
   # Perform environment variable substitution
   if [ "$dry_run" = false ]; then
@@ -112,7 +112,6 @@ main() {
     copy_and_substitute "$target_folder" "$temp_dir" "$dry_run"
   fi
 
-  cd "$temp_dir"
   kustomize build "$temp_dir/$target_folder" "$@"
 }
 
