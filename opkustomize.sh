@@ -29,30 +29,35 @@ copy_and_substitute() {
   local temp_dir="$2"
   local dry_run="$3"
 
-  local temp_destination="$temp_dir"
-
   local root_path
-  root_path="$target_folder"
 
-  IFS='/' read -ra parts <<< "$target_folder"
+  # Extract root path from target_folder
+  IFS='/' read -ra parts <<<"$target_folder"
   if [ "${parts[0]}" = "." ]; then
-      root_path="${parts[1]}"
+    root_path="${parts[1]}"
   else
     root_path="${parts[0]}"
   fi
 
+  # Ensure temp destination directory exists
+  mkdir -p "$temp_dir/$root_path"
 
-  # Create temp_destination if it doesn't exist
-  mkdir -p "$temp_destination/$root_path"
+  # Iterate over files in the source directory
+  find "$root_path" -type f -print0 | while IFS= read -r -d '' file; do
+    if [ -f "$file" ]; then
+      # Calculate destination file path
+      destination_file="$temp_dir/${file#$temp_dir/}"
+      mkdir -p "$(dirname "$destination_file")"
 
-  # Copy everything from the source root directory to the temp destination
-  # We copy everything from the root to be able to apply overlays too
-  cp -r "$root_path"/* "$temp_destination/$root_path"
-
-  # Perform environment variable substitution
-  if [ "$dry_run" = false ]; then
-    find "$temp_destination" -type f -exec envsubst {} \;
-  fi
+      if [ "$dry_run" = false ]; then
+        # Perform environment variable substitution
+        envsubst <"$file" >"$destination_file"
+      else
+        # Directly copy the file without substitution for dry_run
+        cp "$file" "$destination_file"
+      fi
+    fi
+  done
 }
 
 export -f copy_and_substitute
@@ -107,9 +112,9 @@ main() {
 
   # Run main functionality
   if [ "$dry_run" = false ]; then
-    op run --env-file="$env_file" -- bash -c 'copy_and_substitute "$0" "$1"' "$target_folder" "$temp_dir"
+    op run --env-file="$env_file" -- bash -c 'copy_and_substitute "$0" "$1" false' "$target_folder" "$temp_dir"
   else
-    copy_and_substitute "$target_folder" "$temp_dir" "$dry_run"
+    copy_and_substitute "$target_folder" "$temp_dir" true
   fi
 
   kustomize build "$temp_dir/$target_folder" "$@"
