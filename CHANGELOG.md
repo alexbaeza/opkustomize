@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/alexbaeza/opkustomize/compare/v1.2.3...v1.3.0) (2024-04-14)
+
+
+### Features
+
+* **path-copy:** Make script copy everything from root folder to be able to support kustomize overlays, add --dry-run flag to supportpiping the output to other tools like kubeconform ([9b8c0be](https://github.com/alexbaeza/opkustomize/commit/9b8c0be50961b1d219cae2d0e34a585d03a77c33))
+
 ## [1.2.3](https://github.com/alexbaeza/opkustomize/compare/v1.2.2...v1.2.3) (2024-04-13)
 
 
